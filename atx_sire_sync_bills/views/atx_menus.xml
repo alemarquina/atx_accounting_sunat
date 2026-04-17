@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem
+        id="menu_atx_sire_root"
+        name="SIRE"
+        parent="account.menu_finance"
+        sequence="99"/>
+
+    <menuitem
+        id="menu_atx_sire_sync"
+        name="Sincronizar Período"
+        parent="menu_atx_sire_root"
+        action="atx_sire_sync_bills.action_atx_sync_wizard"
+        sequence="10"/>
+
+    <menuitem
+        id="menu_atx_sire_config"
+        name="Configuración SUNAT"
+        parent="menu_atx_sire_root"
+        action="atx_accounting_base.action_atx_cpe_config"
+        sequence="20"/>
+
+    <menuitem
+        id="menu_atx_sire_log"
+        name="Log Sincronizaciones"
+        parent="menu_atx_sire_root"
+        action="atx_accounting_base.action_atx_sync_log"
+        sequence="30"/>
+
+</odoo>

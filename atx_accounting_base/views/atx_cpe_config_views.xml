@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_atx_cpe_config_form" model="ir.ui.view">
+        <field name="name">atx.cpe.config.form</field>
+        <field name="model">atx.cpe.config</field>
+        <field name="arch" type="xml">
+            <form string="SUNAT Configuration">
+                <sheet>
+                    <group string="Empresa">
+                        <field name="company_id"/>
+                        <field name="atx_environment"/>
+                        <field name="atx_active"/>
+                    </group>
+                    <group string="Credenciales API SUNAT">
+                        <field name="atx_client_id"/>
+                        <field name="atx_client_secret" password="True"/>
+                        <field name="atx_ruc"/>
+                    </group>
+                    <group string="Credenciales SOL">
+                        <field name="atx_sol_user"/>
+                        <field name="atx_sol_password" password="True"/>
+                    </group>
+                    <group string="Estado Sincronización">
+                        <field name="atx_ultimo_periodo"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_atx_cpe_config_list" model="ir.ui.view">
+        <field name="name">atx.cpe.config.list</field>
+        <field name="model">atx.cpe.config</field>
+        <field name="arch" type="xml">
+            <list string="Configuraciones SUNAT">
+                <field name="company_id"/>
+                <field name="atx_ruc"/>
+                <field name="atx_environment"/>
+                <field name="atx_ultimo_periodo"/>
+                <field name="atx_active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_atx_cpe_config" model="ir.actions.act_window">
+        <field name="name">Configuración SUNAT</field>
+        <field name="res_model">atx.cpe.config</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Log sincronizaciones -->
+    <record id="view_atx_sync_log_list" model="ir.ui.view">
+        <field name="name">atx.sync.log.list</field>
+        <field name="model">atx.sync.log</field>
+        <field name="arch" type="xml">
+            <list string="Log Sincronizaciones" decoration-danger="atx_state == 'error'" decoration-warning="atx_state == 'parcial'">
+                <field name="atx_sync_date"/>
+                <field name="company_id"/>
+                <field name="atx_periodo"/>
+                <field name="atx_origin"/>
+                <field name="atx_total_facturas"/>
+                <field name="atx_nuevas"/>
+                <field name="atx_existentes"/>
+                <field name="atx_errores"/>
+                <field name="atx_state" widget="badge"
+                       decoration-success="atx_state == 'ok'"
+                       decoration-warning="atx_state == 'parcial'"
+                       decoration-danger="atx_state == 'error'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_atx_sync_log_form" model="ir.ui.view">
+        <field name="name">atx.sync.log.form</field>
+        <field name="model">atx.sync.log</field>
+        <field name="arch" type="xml">
+            <form string="Log Sincronización">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="company_id"/>
+                            <field name="atx_sync_date"/>
+                            <field name="atx_periodo"/>
+                            <field name="atx_origin"/>
+                            <field name="atx_state"/>
+                        </group>
+                        <group>
+                            <field name="atx_total_facturas"/>
+                            <field name="atx_nuevas"/>
+                            <field name="atx_existentes"/>
+                            <field name="atx_errores"/>
+                        </group>
+                    </group>
+                    <group string="Notas">
+                        <field name="atx_notas" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_atx_sync_log" model="ir.actions.act_window">
+        <field name="name">Log Sincronizaciones</field>
+        <field name="res_model">atx.sync.log</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

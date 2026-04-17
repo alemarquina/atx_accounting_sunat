@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_atx_cpe_config_user,atx.cpe.config user,model_atx_cpe_config,base.group_user,1,0,0,0
+access_atx_cpe_config_manager,atx.cpe.config manager,model_atx_cpe_config,base.group_system,1,1,1,1
+access_atx_sync_log_user,atx.sync.log user,model_atx_sync_log,base.group_user,1,0,0,0
+access_atx_sync_log_manager,atx.sync.log manager,model_atx_sync_log,base.group_system,1,1,1,1

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_atx_account_move_form" model="ir.ui.view">
+        <field name="name">atx.account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="SUNAT / SIRE" name="atx_sunat_sire">
+
+                    <group string="Identificación del Comprobante">
+                        <group>
+                            <field name="atx_cpe_type"/>
+                            <field name="atx_serie"/>
+                            <field name="atx_correlativo"/>
+                            <field name="atx_numero_completo"/>
+                            <field name="atx_hash_cpe"/>
+                        </group>
+                        <group>
+                            <field name="atx_estado_sunat" widget="badge"
+                                   decoration-success="atx_estado_sunat == 'ACEPTADO'"
+                                   decoration-danger="atx_estado_sunat == 'RECHAZADO'"
+                                   decoration-warning="atx_estado_sunat == 'BAJA'"/>
+                            <field name="atx_cdr_numero"/>
+                            <field name="atx_cdr_fecha"/>
+                            <field name="atx_estado_proceso"/>
+                            <field name="atx_sync_origin"/>
+                            <field name="atx_sync_date"/>
+                        </group>
+                    </group>
+
+                    <group string="Montos SUNAT">
+                        <group>
+                            <field name="atx_base_imponible"/>
+                            <field name="atx_igv_monto"/>
+                            <field name="atx_total_sunat"/>
+                        </group>
+                        <group>
+                            <field name="atx_montos_ok" widget="boolean_toggle"/>
+                            <field name="atx_moneda_sunat"/>
+                            <field name="atx_tipo_cambio_sbs"/>
+                        </group>
+                        <div class="alert alert-warning" role="alert"
+                             invisible="atx_montos_ok == True">
+                            Los montos SUNAT difieren más de S/ 0.10 de los montos de Odoo. Verifique con la factura física.
+                        </div>
+                    </group>
+
+                    <group string="Detracción">
+                        <group>
+                            <field name="atx_tiene_detraccion"/>
+                            <field name="atx_detraccion_porcentaje" invisible="not atx_tiene_detraccion"/>
+                            <field name="atx_detraccion_monto" invisible="not atx_tiene_detraccion"/>
+                        </group>
+                        <group invisible="not atx_tiene_detraccion">
+                            <field name="atx_detraccion_cuenta"/>
+                            <field name="atx_detraccion_fecha"/>
+                            <field name="atx_bien_servicio_code"/>
+                        </group>
+                    </group>
+
+                    <group string="Retención">
+                        <field name="atx_tiene_retencion"/>
+                        <field name="atx_retencion_porcentaje" invisible="not atx_tiene_retencion"/>
+                        <field name="atx_retencion_monto" invisible="not atx_tiene_retencion"/>
+                    </group>
+
+                    <group string="Percepción">
+                        <field name="atx_tiene_percepcion"/>
+                        <field name="atx_percepcion_porcentaje" invisible="not atx_tiene_percepcion"/>
+                        <field name="atx_percepcion_monto" invisible="not atx_tiene_percepcion"/>
+                    </group>
+
+                    <group string="Documento Origen (NC / ND)"
+                           invisible="atx_cpe_type not in ['07', '08']">
+                        <group>
+                            <field name="atx_doc_origen_tipo"/>
+                            <field name="atx_doc_origen_serie"/>
+                            <field name="atx_doc_origen_numero"/>
+                        </group>
+                        <group>
+                            <field name="atx_motivo_nota"/>
+                        </group>
+                    </group>
+
+                    <group string="DUA" invisible="atx_cpe_type != '50'">
+                        <group>
+                            <field name="atx_dua_numero"/>
+                            <field name="atx_dua_aduana"/>
+                        </group>
+                        <group>
+                            <field name="atx_dua_fecha_numeracion"/>
+                        </group>
+                    </group>
+
+                    <group string="Control del Contador">
+                        <group>
+                            <field name="atx_notas_contador"/>
+                        </group>
+                        <group>
+                            <field name="atx_revisado_por"/>
+                            <field name="atx_revisado_fecha"/>
+                        </group>
+                    </group>
+
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_atx_account_move_list" model="ir.ui.view">
+        <field name="name">atx.account.move.list</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="inside">
+                <field name="atx_cpe_type" optional="show"/>
+                <field name="atx_numero_completo" optional="show"/>
+                <field name="atx_estado_sunat" optional="show" widget="badge"
+                       decoration-success="atx_estado_sunat == 'ACEPTADO'"
+                       decoration-danger="atx_estado_sunat == 'RECHAZADO'"
+                       decoration-warning="atx_estado_sunat == 'BAJA'"/>
+                <field name="atx_tiene_detraccion" optional="hide"/>
+                <field name="atx_estado_proceso" optional="show"/>
+                <field name="atx_montos_ok" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- CPE type reference data — used for display and validation only.
+     The actual selection field lives in atx_inherit_account_move.py. -->
+<odoo>
+    <data noupdate="1">
+    </data>
+</odoo>
